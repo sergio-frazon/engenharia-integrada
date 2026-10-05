@@ -1,0 +1,10 @@
+{
+  "description": "Gestão completa de obras para engenheiros e construtoras com planejamento, acompanhamento, financeiro e relatórios integrados em um sistema intuitivo.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
