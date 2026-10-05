@@ -1,0 +1,12 @@
+import assert from "node:assert/strict";
+import { createClient } from "@supabase/supabase-js";
+const client = createClient(process.env.VITE_SUPABASE_URL, process.env.VITE_SUPABASE_PUBLISHABLE_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
+const table = await client.from("ei_works").select("id");
+assert.ok(table.error, "Anonymous requests must not read works");
+assert.equal(table.error.code, "42501");
+const rpc = await client.rpc("ei_load_state");
+assert.ok(rpc.error, "Anonymous requests must not call authenticated RPCs");
+assert.equal(rpc.error.code, "42501");
+const files = await client.storage.from("engenharia-arquivos").createSignedUrl("10000000-0000-0000-0000-000000000001/private.pdf", 60);
+assert.ok(files.error, "Anonymous requests must not sign private files");
+console.log("PASS: public key reaches Supabase; anonymous reads, RPCs and private file signing are denied.");
